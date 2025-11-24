@@ -20,7 +20,7 @@
     <label for="categoria">Categoria:</label>
     <select id="categoria" name="categoria" [(ngModel)]="novoServico.categoria" required>
       <option value="" disabled selected>Selecione uma categoria</option>
-      <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+      <option *ngFor="let categoria of categorias" [value]="categoria.value">{{ categoria.label }}</option>
     </select>
     <br />
     

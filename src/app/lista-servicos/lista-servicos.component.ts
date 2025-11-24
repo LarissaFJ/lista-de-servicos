@@ -1,41 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Servico } from '../models/servico';
+import { ServicosService } from '../servicos/services';
 
 @Component({
   selector: 'app-lista-servicos',
-  standalone: true, // Componente standalone
-  imports: [CommonModule, RouterModule], // Importa CommonModule e RouterModule
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './lista-servicos.component.html',
   styleUrls: ['./lista-servicos.component.css'],
 })
 export class ListaServicosComponent implements OnInit {
-  servicos: any[] = []; // Lista de serviços
+  private api = inject(ServicosService);
+  servicos: Servico[] = [];
+  q = '';
 
-  constructor() {}
+  ngOnInit() { this.buscar(); }
 
-  ngOnInit() {
-    this.carregarServicos();
+  buscar() {
+    this.api.list({ q: this.q, size: 100 }).subscribe(p => this.servicos = p.content);
   }
-
-  carregarServicos() {
-    const services = localStorage.getItem('services');
-    if (services) {
-      console.log('Serviços carregados do localStorage:', services); 
-      this.servicos = JSON.parse(services);
-    } else {
-      console.log('Nenhum serviço encontrado no localStorage');
-      this.servicos = [];
-    }
-  }
-  
 
   removerServico(index: number) {
-    // Remove o serviço pelo índice
-    this.servicos.splice(index, 1);
-    // Atualiza o localStorage
-    localStorage.setItem('services', JSON.stringify(this.servicos));
+    const servico = this.servicos[index];
+    if (servico.id && confirm('Confirma excluir?')) {
+      this.api.delete(servico.id).subscribe(() => this.buscar());
+    }
   }
 }
-
-

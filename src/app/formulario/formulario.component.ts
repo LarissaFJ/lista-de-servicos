@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { Servico, ServicoCategoria } from '../models/servico';
+import { ServicosService } from '../servicos/services';
 
 @Component({
   selector: 'app-formulario',
@@ -11,73 +13,29 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./formulario.component.css'],
 })
 export class FormularioComponent {
-  novoServico = {
-    nome: '',
-    telefone: '',
-    categoria: '',
-    descricao: '',
-  };
+  private api = inject(ServicosService);
+  constructor(private router: Router) {}
 
-  // Categorias disponíveis para o dropdown
-  categorias: string[] = [
-    'Serviços Gerais',
-    'Culinária',
-    'Animais',
-    'Beleza e Estética',
-    'Tecnologia e Informática',
-    'Educação',
-    'Outros Serviços',
+  categorias: { label: string; value: ServicoCategoria }[] = [
+    { label: 'Serviços Gerais', value: 'SERVICOS_GERAIS' },
+    { label: 'Culinária', value: 'CULINARIA' },
+    { label: 'Animais', value: 'ANIMAIS' },
+    { label: 'Beleza e Estética', value: 'BELEZA_E_ESTETICA' },
+    { label: 'Tecnologia e Informática', value: 'TECNOLOGIA_E_INFORMATICA' },
+    { label: 'Educação', value: 'EDUCACAO' },
+    { label: 'Outros Serviços', value: 'OUTROS_SERVICOS' },
   ];
 
-  constructor(private router: Router) {
-    this.inicializarServicosPredefinidos();
-  }
-
-  inicializarServicosPredefinidos() {
-    const services = JSON.parse(localStorage.getItem('services') || '[]');
-
-    if (services.length === 0) {
-      const servicosPredefinidos = [
-        {
-          nome: 'Escola Inovação',
-          telefone: '519991831001',
-          categoria: 'Educação',
-          descricao: 'Cursos profissionalizantes. Aulas Presenciais e EAD.',
-        },
-        {
-          nome: 'MR Soluções Elétricas',
-          telefone: '51992325581',
-          categoria: 'Outros Serviços',
-          descricao: 'Soluções Elétricas.',
-        },
-        {
-          nome: 'Gás e Água Distribuidora JR',
-          telefone: '5134903899',
-          categoria: 'Outros Serviços',
-          descricao: 'Distribuidora de água e gás.',
-        },
-    
-      ];
-
-      // Salva os serviços predefinidos no localStorage
-      localStorage.setItem('services', JSON.stringify(servicosPredefinidos));
-    }
-  }
-
- 
+  novoServico: Servico = { nome: '', telefone: '', categoria: 'OUTROS_SERVICOS', descricao: '' };
 
   adicionarServico() {
-    const services = JSON.parse(localStorage.getItem('services') || '[]');
-    services.push({ ...this.novoServico });
-    localStorage.setItem('services', JSON.stringify(services));
-
-    // Limpa o formulário após o envio
-    this.novoServico = {
-      nome: '',
-      telefone: '',
-      categoria: '',
-      descricao: '',
-    };
-    this.router.navigate(['/']);
+    this.api.create(this.novoServico).subscribe({
+      next: () => {
+        this.novoServico = { nome: '', telefone: '', categoria: 'OUTROS_SERVICOS', descricao: '' };
+        this.router.navigate(['/']);
+      },
+      error: e => alert('Erro ao salvar: ' + (e?.error?.message ?? 'verifique os campos')),
+    });
   }
 }
+
