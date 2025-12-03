@@ -11,3 +11,11 @@ export interface Servico {
   descricao: string;
   criadoEm?: string;
 }
+
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+}

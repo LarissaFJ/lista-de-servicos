@@ -1,6 +1,9 @@
+<div class="header">
+  <a routerLink="/login" class="btn-login">Login</a>
+</div>
+
 <div class="container">
     <h1>Lista de Serviços</h1>
-  
 
     <table *ngIf="servicos.length > 0; else vazio">
       <thead>
@@ -30,7 +33,7 @@
       <p>Nenhum serviço cadastrado no momento. Clique no botão abaixo para adicionar.</p>
     </ng-template>
   
-    <!-- Botão para voltar ao formulário -->
+    <!-- Botão de navegação -->
     <a routerLink="/formulario" class="btn-formulario"><i class="fas fa-plus-circle"></i>Cadastrar Novo Serviço</a>
   </div>
   
