@@ -52,6 +52,20 @@
     background-color: #ddd;
   }
   
+  .btn-editar {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px; 
+    color: #007bff; 
+    padding: 5px;
+    margin-right: 5px;
+  }
+  
+  .btn-editar:hover {
+    color: #0056b3; 
+  }
+
   .btn-remover {
     background-color: transparent;
     border: none;
@@ -101,4 +115,4 @@
     background-color: #0056b3;
   }
   
-  
+ 

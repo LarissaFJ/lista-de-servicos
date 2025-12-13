@@ -52,6 +52,11 @@ export class ServicosService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  myServices(params?: { page?: number; size?: number }) {
+  return this.http.get<any>(`${this.baseUrl}/listMyServices`, { params: { page: params?.page ?? 0, size: params?.size ?? 100 } as any });
+}
+
 }
 
 
