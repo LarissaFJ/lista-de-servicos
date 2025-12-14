@@ -15,7 +15,7 @@ import { AuthService } from '../../services/auth.service';
       <h2>{{ isLogin ? 'Login' : 'Cadastrar Conta' }}</h2>
       
       <form (ngSubmit)="onSubmit()" #authForm="ngForm">
-        <input *ngIf="!isLogin" [(ngModel)]="username" name="username" placeholder="Usuário" required>
+
         <input [(ngModel)]="email" name="email" type="email" placeholder="Email" required>
         <input [(ngModel)]="password" name="password" type="password" placeholder="Senha" required>
         <button type="submit" [disabled]="!authForm.valid">
@@ -76,7 +76,6 @@ import { AuthService } from '../../services/auth.service';
   `]
 })
 export class LoginComponent {
-  username = '';
   password = '';
   email = '';
   isLogin = true;
@@ -90,7 +89,7 @@ export class LoginComponent {
         error: (err) => console.error('Erro no login:', err)
       });
     } else {
-      this.authService.register(this.username, this.email, this.password).subscribe({
+      this.authService.register(this.email, this.password).subscribe({
         next: () => {
           alert('Conta cadastrada com sucesso!');
           this.isLogin = true;
@@ -111,7 +110,6 @@ export class LoginComponent {
   }
 
   private clearForm() {
-    this.username = '';
     this.password = '';
     this.email = '';
   }

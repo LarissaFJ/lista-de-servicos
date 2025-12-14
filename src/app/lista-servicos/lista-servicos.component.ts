@@ -26,18 +26,24 @@ export class ListaServicosComponent implements OnInit {
     this.api.list({ q: this.q, size: 100 }).subscribe(p => this.servicos = p.content);
   }
 
-  removerServico(index: number) {
-    const servico = this.servicos[index];
-    if (servico.id && confirm('Confirma excluir?')) {
-      this.api.delete(servico.id).subscribe(() => this.buscar());
-    }
-  }
-
   cadastrarServico() {
     if (this.authService.isAuthenticated()) {
       this.router.navigate(['/formulario']);
     } else {
       alert('Você precisa estar logado para cadastrar um serviço.');
     }
+  }
+
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
+  meusServicos() {
+    this.router.navigate(['/meus-servicos']);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

@@ -9,11 +9,9 @@ interface LoginResponse {
   token: string;
   role: string;
   email: string;
-  username: string;
 }
 
 interface RegisterRequest {
-  username: string;
   email: string;
   password: string;
 }
@@ -34,9 +32,8 @@ export class AuthService {
       const token = localStorage.getItem('token');
       const role = localStorage.getItem('role');
       const email = localStorage.getItem('email');
-      const username = localStorage.getItem('username');
       if (token && role && email) {
-        this.currentUserSubject.next({ token, role, email, username });
+        this.currentUserSubject.next({ token, role, email });
       }
     }
   }
@@ -48,14 +45,14 @@ export class AuthService {
           localStorage.setItem('token', response.token);
           localStorage.setItem('role', response.role);
           localStorage.setItem('email', response.email);
-          localStorage.setItem('username', response.username);
+
         }
         this.currentUserSubject.next(response);
       }));
   }
 
-  register(username: string, email: string, password: string): Observable<RegisterResponse> {
-    const body: RegisterRequest = { username, email, password };
+  register(email: string, password: string): Observable<RegisterResponse> {
+    const body: RegisterRequest = { email, password };
     return this.http.post<RegisterResponse>(`${this.apiUrl}/register`, body);
   }
 
@@ -64,7 +61,7 @@ export class AuthService {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
       localStorage.removeItem('email');
-      localStorage.removeItem('username');
+
     }
     this.currentUserSubject.next(null);
   }

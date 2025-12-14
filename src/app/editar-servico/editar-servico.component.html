@@ -1,0 +1,39 @@
+<div class="container">
+  <h1>Editar Serviço</h1>
+
+  <form (ngSubmit)="salvarAlteracoes()" #serviceForm="ngForm">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" [(ngModel)]="servico.nome" required />
+    <br />
+
+    <label for="telefone">Telefone:</label>
+    <input type="text" 
+    id="telefone" 
+    name="telefone" [(ngModel)]="servico.telefone" 
+    required 
+    pattern="[0-9]*" 
+    maxlength="15" 
+    title="Digite apenas números no telefone"
+    />
+    <br />
+
+    <label for="categoria">Categoria:</label>
+    <select id="categoria" name="categoria" [(ngModel)]="servico.categoria" required>
+      <option value="" disabled>Selecione uma categoria</option>
+      <option *ngFor="let categoria of categorias" [value]="categoria.value">{{ categoria.label }}</option>
+    </select>
+    <br />
+    
+
+    <label for="descricao">Descrição:</label>
+    <input type="text" id="descricao" name="descricao" [(ngModel)]="servico.descricao" required />
+    <br />
+
+    <button type="submit" [disabled]="serviceForm.invalid" class="btn-add">
+      <i class="fas fa-save"></i> Salvar Alterações
+    </button>
+  </form>
+
+  <a routerLink="/meus-servicos" class="btn-lista">Voltar para Meus Serviços</a>
+
+</div>

@@ -1,3 +1,7 @@
+<div class="header">
+  <a href="#" (click)="logout()" class="btn-login">Logout</a>
+</div>
+
 <div class="container">
     <h1>Meus Serviços</h1>
 
@@ -32,4 +36,8 @@
   
     <!-- Botão de navegação -->
     <button (click)="cadastrarServico()" class="btn-formulario"><i class="fas fa-plus-circle"></i>Cadastrar Novo Serviço</button>
-  </div>
+    
+    <p>
+      <a routerLink="/" class="back-home">← Voltar para página inicial</a>
+    </p>
+</div>

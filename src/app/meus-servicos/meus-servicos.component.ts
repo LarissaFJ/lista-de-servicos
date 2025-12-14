@@ -36,11 +36,16 @@ export class MeusServicosComponent implements OnInit {
   editarServico(index: number) {
     const servico = this.servicos[index];
     if (servico.id) {
-      this.router.navigate(['/formulario'], { queryParams: { id: servico.id } });
+      this.router.navigate(['/editar-servico'], { queryParams: { id: servico.id } });
     }
   }
 
   cadastrarServico() {
     this.router.navigate(['/formulario']);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }
