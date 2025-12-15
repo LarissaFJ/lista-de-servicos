@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Servico, ServicoCategoria } from '../models/servico';
 import { ServicosService } from '../servicos/services';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-formulario',
@@ -14,6 +15,8 @@ import { ServicosService } from '../servicos/services';
 })
 export class FormularioComponent {
   private api = inject(ServicosService);
+  private authService = inject(AuthService);
+  
   constructor(private router: Router) {}
 
   categorias: { label: string; value: ServicoCategoria }[] = [
@@ -32,9 +35,18 @@ export class FormularioComponent {
     this.api.create(this.novoServico).subscribe({
       next: () => {
         this.novoServico = { nome: '', telefone: '', categoria: 'OUTROS_SERVICOS', descricao: '' };
-        this.router.navigate(['/']);
+        if (this.authService.isAdmin()) {
+          this.router.navigate(['/servicos-cadastrados']);
+        } else {
+          this.router.navigate(['/meus-servicos']);
+        }
       },
       error: e => alert('Erro ao salvar: ' + (e?.error?.message ?? 'verifique os campos')),
     });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

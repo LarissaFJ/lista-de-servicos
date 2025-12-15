@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { Servico, ServicoCategoria } from '../models/servico';
 import { ServicosService } from '../servicos/services';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-editar-servico',
@@ -14,6 +15,7 @@ import { ServicosService } from '../servicos/services';
 })
 export class EditarServicoComponent implements OnInit {
   private api = inject(ServicosService);
+  private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   
   constructor(private router: Router) {}
@@ -67,5 +69,10 @@ export class EditarServicoComponent implements OnInit {
         error: e => alert('Erro ao atualizar: ' + (e?.error?.message ?? 'verifique os campos')),
       });
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

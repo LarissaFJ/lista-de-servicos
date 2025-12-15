@@ -1,13 +1,12 @@
 <div class="header">
-  <a *ngIf="!isAuthenticated()" routerLink="/login" class="btn-login">Login</a>
-  <div *ngIf="isAuthenticated()" class="header-links">
-    <a routerLink="/meus-servicos" class="link-text">Meus Serviços</a>
+  <div class="header-links">
+    <a routerLink="/" class="link-text">Lista de Serviços</a>
     <a href="#" (click)="logout()" class="btn-login">Logout</a>
   </div>
 </div>
 
 <div class="container">
-    <h1>Lista de Serviços</h1>
+    <h1>Serviços Cadastrados</h1>
 
     <table *ngIf="servicos.length > 0; else vazio">
       <thead>
@@ -16,6 +15,7 @@
           <th>Telefone</th>
           <th>Categoria</th>
           <th>Descrição</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -24,19 +24,24 @@
           <td>{{ servico.telefone }}</td>
           <td>{{ servico.categoria }}</td>
           <td>{{ servico.descricao }}</td>
+          <td>
+            <button (click)="removerServico(i)" class="btn-remover"><i class="fa-regular fa-trash-can"></i></button>
+          </td>
         </tr>
       </tbody>
     </table>
   
     <!-- Caso a lista esteja vazia -->
     <ng-template #vazio>
-      <p>Nenhum serviço cadastrado no momento. Clique no botão abaixo para adicionar.</p>
+      <p>Nenhum serviço cadastrado no sistema.</p>
     </ng-template>
   
     <!-- Botão de navegação -->
-    <button (click)="cadastrarServico()" class="btn-formulario">
-      <i class="fas fa-plus-circle"></i>Cadastrar Novo Serviço
-    </button>
+    <button (click)="cadastrarServico()" class="btn-formulario"><i class="fas fa-plus-circle"></i>Cadastrar Novo Serviço</button>
+    
+    <p>
+      <a routerLink="/" class="back-home">← Voltar para página inicial</a>
+    </p>
 </div>
 
 <style>

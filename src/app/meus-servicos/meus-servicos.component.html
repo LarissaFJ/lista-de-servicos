@@ -1,5 +1,8 @@
 <div class="header">
-  <a href="#" (click)="logout()" class="btn-login">Logout</a>
+  <div class="header-links">
+    <a routerLink="/" class="link-text">Lista de Serviços</a>
+    <a href="#" (click)="logout()" class="btn-login">Logout</a>
+  </div>
 </div>
 
 <div class="container">
@@ -41,3 +44,21 @@
       <a routerLink="/" class="back-home">← Voltar para página inicial</a>
     </p>
 </div>
+
+<style>
+.header-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.link-text {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.link-text:hover {
+  text-decoration: underline;
+}
+</style>

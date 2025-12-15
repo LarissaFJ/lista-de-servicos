@@ -85,8 +85,18 @@ export class LoginComponent {
   onSubmit() {
     if (this.isLogin) {
       this.authService.login(this.email, this.password).subscribe({
-        next: () => this.router.navigate(['/meus-servicos']),
-        error: (err) => console.error('Erro no login:', err)
+        next: () => {
+          if (this.authService.isAdmin()) {
+            this.router.navigate(['/servicos-cadastrados']);
+          } else {
+            this.router.navigate(['/meus-servicos']);
+          }
+        },
+        error: (err) => {
+          console.error('Erro no login:', err);
+          const errorMessage = err?.error?.message || err?.message || 'Erro no login. Verifique suas credenciais.';
+          alert('Erro no login: ' + errorMessage);
+        }
       });
     } else {
       this.authService.register(this.email, this.password).subscribe({
@@ -124,4 +134,3 @@ export class LoginComponent {
     }
   }
 }
-

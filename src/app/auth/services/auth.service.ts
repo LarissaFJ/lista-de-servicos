@@ -32,8 +32,14 @@ export class AuthService {
       const token = localStorage.getItem('token');
       const role = localStorage.getItem('role');
       const email = localStorage.getItem('email');
-      if (token && role && email) {
-        this.currentUserSubject.next({ token, role, email });
+      const loginTime = localStorage.getItem('loginTime');
+      
+      if (token && role && email && loginTime) {
+        if (this.isTokenExpired(loginTime)) {
+          this.logout();
+        } else {
+          this.currentUserSubject.next({ token, role, email });
+        }
       }
     }
   }
@@ -42,10 +48,11 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password })
       .pipe(tap(response => {
         if (isPlatformBrowser(this.platformId)) {
+          const loginTime = Date.now().toString();
           localStorage.setItem('token', response.token);
           localStorage.setItem('role', response.role);
           localStorage.setItem('email', response.email);
-
+          localStorage.setItem('loginTime', loginTime);
         }
         this.currentUserSubject.next(response);
       }));
@@ -61,15 +68,34 @@ export class AuthService {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
       localStorage.removeItem('email');
-
+      localStorage.removeItem('loginTime');
     }
     this.currentUserSubject.next(null);
   }
 
   isAuthenticated(): boolean {
     if (!isPlatformBrowser(this.platformId)) return false;
+    
     const token = localStorage.getItem('token');
-    return !!token;
+    const loginTime = localStorage.getItem('loginTime');
+    
+    if (!token || !loginTime) return false;
+    
+    if (this.isTokenExpired(loginTime)) {
+      this.logout();
+      alert('Sessão expirada, faça login novamente');
+      return false;
+    }
+    
+    return true;
+  }
+
+  private isTokenExpired(loginTime: string): boolean {
+    const loginTimestamp = parseInt(loginTime);
+    const currentTime = Date.now();
+    const oneHourInMs = 60 * 60 * 1000; // 1 hora em milissegundos
+    
+    return (currentTime - loginTimestamp) > oneHourInMs;
   }
 
   isAdmin(): boolean {
@@ -83,4 +109,3 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 }
-

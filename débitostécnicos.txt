@@ -1,6 +1,5 @@
-- precisa deslogar com ação do usuario -FRONT ok
+
 - precisa expirar a sessão em X tempo - FRONT e BACKEND
-- na raiz, componet lista, não deve ter ações e nem a possibilidade da cadastrar o novo -FRONT ok
-- acesso o site -> mostra a lista -> loga -> acessa meus serviços (aqui pode cadastrar e tomar ações (editar/deletar)) FRONT ok
-- home - Login - Meus Serviços - FRONT ok
-- ao editar serviço, deve carregar as informações do serviço existente. Construir componente de edição. - FRONT
+-recuperar senha
+
+

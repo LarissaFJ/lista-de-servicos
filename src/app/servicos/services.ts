@@ -8,6 +8,7 @@ export class ServicosService {
 
   // usando CORS com @CrossOrigin no back:
   private readonly baseUrl = 'http://localhost:8080/api/services';
+  private readonly adminBaseUrl = 'http://localhost:8080/api/admin/services';
 
 
   constructor(private http: HttpClient) {}
@@ -51,6 +52,10 @@ export class ServicosService {
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  deleteAdmin(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.adminBaseUrl}/${id}`);
   }
 
   myServices(params?: { page?: number; size?: number }) {
