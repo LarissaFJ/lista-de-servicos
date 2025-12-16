@@ -1,0 +1,18 @@
+<div class="auth-container">
+  <h2>Redefinir Senha</h2>
+  
+  <form (ngSubmit)="onSubmit()" #resetForm="ngForm">
+    <input [(ngModel)]="email" name="email" type="email" placeholder="Digite seu email" required>
+    <input [(ngModel)]="novaSenha" name="novaSenha" type="password" placeholder="Nova senha" required minlength="6">
+    <button type="submit" [disabled]="!resetForm.valid">
+      Redefinir Senha
+    </button>
+  </form>
+  
+  <p>
+    <a routerLink="/login" class="back-home">← Voltar para Login</a>
+  </p>
+  <p>
+    <a routerLink="/" class="back-home">← Voltar para página inicial</a>
+  </p>
+</div>

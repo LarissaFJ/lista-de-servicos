@@ -9,6 +9,7 @@ interface LoginResponse {
   token: string;
   role: string;
   email: string;
+  message: string;
 }
 
 interface RegisterRequest {
@@ -55,6 +56,7 @@ export class AuthService {
           localStorage.setItem('loginTime', loginTime);
         }
         this.currentUserSubject.next(response);
+        alert(response.message);
       }));
   }
 
@@ -105,7 +107,18 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    if (!isPlatformBrowser(this.platformId)) return null;
-    return localStorage.getItem('token');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('token');
+    }
+    return null;
   }
+
+  resetPassword(email: string, newPassword: string) {
+  return this.http.post(`${this.apiUrl}/reset-password`, {
+    email,
+    newPassword
+  });
+}
+
+
 }

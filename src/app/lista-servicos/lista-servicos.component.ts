@@ -38,6 +38,10 @@ export class ListaServicosComponent implements OnInit {
     return this.authService.isAuthenticated();
   }
 
+isAdmin(): boolean {
+  return this.authService.isAdmin();
+}
+
   meusServicos() {
     this.router.navigate(['/meus-servicos']);
   }

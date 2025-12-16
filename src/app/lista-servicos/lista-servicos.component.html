@@ -1,10 +1,28 @@
 <div class="header">
-  <a *ngIf="!isAuthenticated()" routerLink="/login" class="btn-login">Login</a>
+  <!-- Não logado -->
+  <a *ngIf="!isAuthenticated()" routerLink="/login" class="btn-login">
+    Login
+  </a>
+
+  <!-- Logado -->
   <div *ngIf="isAuthenticated()" class="header-links">
-    <a routerLink="/meus-servicos" class="link-text">Meus Serviços</a>
-    <a href="#" (click)="logout()" class="btn-login">Logout</a>
+
+    <!-- Usuário comum -->
+    <a *ngIf="!isAdmin()" routerLink="/meus-servicos" class="link-text">
+      Meus Serviços
+    </a>
+
+    <!-- Admin -->
+    <a *ngIf="isAdmin()" routerLink="/servicos-cadastrados" class="link-text">
+      Serviços Cadastrados
+    </a>
+
+    <a href="#" (click)="logout()" class="btn-login">
+      Logout
+    </a>
   </div>
 </div>
+
 
 <div class="container">
     <h1>Lista de Serviços</h1>

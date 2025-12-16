@@ -1,1 +1,24 @@
-<p>login works!</p>
+<div class="auth-container">
+  <h2>{{ isLogin ? 'Login' : 'Cadastrar Conta' }}</h2>
+  
+  <form (ngSubmit)="onSubmit()" #authForm="ngForm">
+
+    <input [(ngModel)]="email" name="email" type="email" placeholder="Email" required>
+    <input [(ngModel)]="password" name="password" type="password" placeholder="Senha" required>
+    <button type="submit" [disabled]="!authForm.valid">
+      {{ isLogin ? 'Entrar' : 'Cadastrar' }}
+    </button>
+  </form>
+  
+  <p>
+    <a href="#" (click)="toggleMode($event)">
+      {{ isLogin ? 'Não tem conta? Cadastre-se' : 'Já tem conta? Faça login' }}
+    </a>
+  </p>
+  <p *ngIf="isLogin">
+    <a routerLink="/esqueci-senha">Esqueceu a senha?</a>
+  </p>
+  <p>
+    <a routerLink="/" class="back-home">← Voltar para página inicial</a>
+  </p>
+</div>

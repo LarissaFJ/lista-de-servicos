@@ -6,6 +6,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { MeusServicosComponent } from './meus-servicos/meus-servicos.component';
 import { EditarServicoComponent } from './editar-servico/editar-servico.component';
 import { ServicosCadastradosComponent } from './servicos-cadastrados/servicos-cadastrados.component';
+import { EsqueciSenhaComponent } from './esqueci-senha/esqueci-senha.component';
 
 export const routes: Routes = [
   { path: '', component: ListaServicosComponent },
@@ -14,5 +15,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'meus-servicos', component: MeusServicosComponent, canActivate: [AuthGuard] },
   { path: 'servicos-cadastrados', component: ServicosCadastradosComponent, canActivate: [AuthGuard] },
+  { path: 'esqueci-senha', component: EsqueciSenhaComponent },
   { path: '**', redirectTo: '' }
 ];
