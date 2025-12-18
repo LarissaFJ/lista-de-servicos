@@ -7,8 +7,8 @@ import { PageResponse, Servico, ServicoCategoria } from '../models/servico';
 export class ServicosService {
 
   // usando CORS com @CrossOrigin no back:
-  private readonly baseUrl = 'http://localhost:8080/api/services';
-  private readonly adminBaseUrl = 'http://localhost:8080/api/admin/services';
+  private readonly baseUrl = 'https://lista-de-servicos-back-production.up.railway.app/api/services';
+  private readonly adminBaseUrl = 'https://lista-de-servicos-back-production.up.railway.app/api/admin/services';
 
 
   constructor(private http: HttpClient) {}

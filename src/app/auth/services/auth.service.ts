@@ -25,7 +25,7 @@ interface RegisterResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/auth';
+  private apiUrl = 'https://lista-de-servicos-back-production.up.railway.app/auth';
   private currentUserSubject = new BehaviorSubject<any>(null);
   
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {

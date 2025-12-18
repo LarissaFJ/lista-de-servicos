@@ -1,5 +1,0 @@
-
-- precisa expirar a sessão em X tempo - FRONT e BACKEND
--recuperar senha
-
-

@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://localhost:8080",
+    "target": "https://lista-de-servicos-back-production.up.railway.app",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
