@@ -18,6 +18,9 @@ export class LoginComponent {
   isLogin = true;
 
   constructor(private authService: AuthService, private router: Router) {}
+  private readonly passwordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/;
+
 
   onSubmit() {
     if (this.isLogin) {
@@ -36,6 +39,18 @@ export class LoginComponent {
         }
       });
     } else {
+  if (!this.passwordRegex.test(this.password)) {
+      alert(
+        'A senha deve conter:\n' +
+        '- 1 letra maiúscula\n' +
+        '- 1 letra minúscula\n' +
+        '- 1 número\n' +
+        '- 1 caractere especial\n' +
+        '- mínimo 6 caracteres'
+      );
+      return;
+    }
+
       this.authService.register(this.email, this.password).subscribe({
         next: () => {
           alert('Conta cadastrada com sucesso!');

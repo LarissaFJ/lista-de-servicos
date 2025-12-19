@@ -19,6 +19,8 @@ export class FormularioComponent {
   
   constructor(private router: Router) {}
 
+  private readonly telefoneRegex = /^\(?\d{2}\)?\s?\d{4,5}[-\s]?\d{4}$/;
+
   categorias: { label: string; value: ServicoCategoria }[] = [
     { label: 'Serviços Gerais', value: 'SERVICOS_GERAIS' },
     { label: 'Culinária', value: 'CULINARIA' },
@@ -32,7 +34,22 @@ export class FormularioComponent {
   novoServico: Servico = { nome: '', telefone: '', categoria: 'OUTROS_SERVICOS', descricao: '' };
 
   adicionarServico() {
-    this.api.create(this.novoServico).subscribe({
+    const tel = (this.novoServico.telefone || '').trim();
+    if (!this.novoServico.nome.trim()) {
+      alert('Informe o nome do serviço.');
+      return;
+    }
+
+    if (!tel) {
+      alert('Informe o telefone com DDD.');
+      return;
+    }
+
+    if (!this.telefoneRegex.test(tel)) {
+      alert('Telefone inválido. Use DDD + número. Ex: 51999999999');
+      return;
+    }
+   this.api.create(this.novoServico).subscribe({
       next: () => {
         this.novoServico = { nome: '', telefone: '', categoria: 'OUTROS_SERVICOS', descricao: '' };
         if (this.authService.isAdmin()) {

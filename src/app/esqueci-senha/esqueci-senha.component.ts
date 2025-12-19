@@ -13,7 +13,7 @@ import { AuthService } from '../auth/services/auth.service';
 })
 export class EsqueciSenhaComponent {
   email = '';
-  novaSenha = '';
+  newPassword = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -23,21 +23,31 @@ export class EsqueciSenhaComponent {
       return;
     }
 
-    if (!this.novaSenha) {
+    if (!this.newPassword) {
       alert('Informe a nova senha');
       return;
     }
 
-    if (this.novaSenha.length < 6) {
-      alert('Nova senha deve ter pelo menos 6 caracteres');
-      return;
+    const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/;
+
+    if (!passwordRegex.test(this.newPassword)) {
+    alert(
+      'A senha deve conter:\n' +
+      '- 1 letra maiúscula\n' +
+      '- 1 letra minúscula\n' +
+      '- 1 número\n' +
+      '- 1 caractere especial\n' +
+      '- mínimo 6 caracteres'
+    );
+    return;
     }
 
-    this.authService.resetPassword(this.email, this.novaSenha).subscribe({
+    this.authService.resetPassword(this.email, this.newPassword).subscribe({
       next: () => {
         alert('Senha redefinida com sucesso!');
         this.email = '';
-        this.novaSenha = '';
+        this.newPassword = '';
         this.router.navigate(['/login']);
       },
       error: (err) => {

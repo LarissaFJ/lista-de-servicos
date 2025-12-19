@@ -3,7 +3,7 @@
   
   <form (ngSubmit)="onSubmit()" #resetForm="ngForm">
     <input [(ngModel)]="email" name="email" type="email" placeholder="Digite seu email" required>
-    <input [(ngModel)]="novaSenha" name="novaSenha" type="password" placeholder="Nova senha" required minlength="6">
+    <input [(ngModel)]="newPassword" name="novaSenha" type="password" placeholder="Nova senha" required minlength="6">
     <button type="submit" [disabled]="!resetForm.valid">
       Redefinir Senha
     </button>
